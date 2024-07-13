@@ -2,12 +2,14 @@
 
 namespace Database\Factories;
 
+use App\Models\Product;
+use App\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Post>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ProductTag>
  */
-class PostFactory extends Factory
+class ProductTagFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +19,8 @@ class PostFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'tag_id' => Tag::factory(), 
+            'product_id' => Product::factory()
         ];
     }
 }
