@@ -24,11 +24,13 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+
+    Route::resource('categories', CategoryController::class);
 });
 
-Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
 
-Route::get('test', function(){
+
+Route::get('test', function () {
     return ProductResource::collection(Product::paginate());
     // return ProductResource::collection(Product::with(['tags', 'category'])->paginate());
 });

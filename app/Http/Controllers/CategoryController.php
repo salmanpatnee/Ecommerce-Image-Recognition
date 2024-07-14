@@ -14,7 +14,7 @@ class CategoryController extends Controller
     public function index()
     {
         return inertia('Categories/Index', [
-            'categories' => CategoryResource::collection(Category::paginate(1))
+            'categories' => CategoryResource::collection(Category::paginate())
         ]);
     }
 
@@ -23,7 +23,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('Categories/Create');
     }
 
     /**
@@ -31,7 +31,13 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $attributes = $request->validate([
+            'name' => 'required',
+        ]);
+
+        Category::create($attributes);
+
+        return to_route('categories.index');
     }
 
     /**
@@ -39,7 +45,9 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        return inertia('Categories/Show', [
+            'category' => CategoryResource::make($category)
+        ]);
     }
 
     /**
@@ -47,7 +55,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return inertia('Categories/Create', ['category' => $category]);
     }
 
     /**
@@ -55,7 +63,13 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $attributes = $request->validate([
+            'name' => 'required',
+        ]);
+
+        $category->update($attributes);
+
+        return to_route('categories.index');
     }
 
     /**
