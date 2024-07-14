@@ -19,18 +19,17 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        User::factory()->create([
+            'name' => 'Salman',
+            'email' => 'salmanpatni92@gmail.com',
+        ]);
 
         $categories = Category::factory(5)->create();
-        
+
         $tags = Tag::factory(10)->create();
-        
+
         $products = Product::factory(10)->recycle($categories)->create();
 
         ProductTag::factory(30)->recycle($tags)->recycle($products)->create();
-
     }
 }

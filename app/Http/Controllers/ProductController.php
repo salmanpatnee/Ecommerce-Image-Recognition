@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CategoryResource;
+use App\Http\Resources\ProductResource;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -12,7 +15,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        return inertia('Products/Index', [
+            'products' => ProductResource::collection(Product::with('category')->paginate()),
+        ]);
     }
 
     /**
@@ -20,7 +25,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categories = CategoryResource::collection(Category::all());
+
+        return inertia('Products/Create', ['categories' => $categories]);
     }
 
     /**
@@ -28,7 +35,17 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $attributes = $request->validate([
+            'category_id' => 'required',
+            'name' => 'required',
+            'description' => 'nullable',
+            'price' => 'required|numeric',
+            'image' => 'nullable|image',
+        ]);
+
+        Product::create($attributes);
+
+        return to_route('products.index');
     }
 
     /**

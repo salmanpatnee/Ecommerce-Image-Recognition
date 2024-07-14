@@ -13,6 +13,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
+
+
         return inertia('Categories/Index', [
             'categories' => CategoryResource::collection(Category::paginate())
         ]);
@@ -45,9 +47,9 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return inertia('Categories/Show', [
-            'category' => CategoryResource::make($category)
-        ]);
+        // return inertia('Categories/Show', [
+        //     'category' => CategoryResource::make($category)
+        // ]);
     }
 
     /**

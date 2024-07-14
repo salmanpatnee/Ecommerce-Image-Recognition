@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TagController;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Foundation\Application;
@@ -26,6 +28,8 @@ Route::middleware([
     })->name('dashboard');
 
     Route::resource('categories', CategoryController::class);
+    Route::resource('tags', TagController::class);
+    Route::resource('products', ProductController::class);
 });
 
 

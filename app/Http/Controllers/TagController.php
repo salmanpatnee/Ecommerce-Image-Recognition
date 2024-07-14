@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TagResource;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,9 @@ class TagController extends Controller
      */
     public function index()
     {
-        //
+        return inertia('Tags/Index', [
+            'tags' => TagResource::collection(Tag::paginate())
+        ]);
     }
 
     /**
@@ -20,7 +23,7 @@ class TagController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('Tags/Create');
     }
 
     /**
@@ -28,7 +31,13 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $attributes = $request->validate([
+            'name' => 'required',
+        ]);
+
+        Tag::create($attributes);
+
+        return to_route('tags.index');
     }
 
     /**
@@ -44,7 +53,7 @@ class TagController extends Controller
      */
     public function edit(Tag $tag)
     {
-        //
+        return inertia('Tags/Create', ['tag' => $tag]);
     }
 
     /**
@@ -52,7 +61,13 @@ class TagController extends Controller
      */
     public function update(Request $request, Tag $tag)
     {
-        //
+        $attributes = $request->validate([
+            'name' => 'required',
+        ]);
+
+        $tag->update($attributes);
+
+        return to_route('tags.index');
     }
 
     /**
