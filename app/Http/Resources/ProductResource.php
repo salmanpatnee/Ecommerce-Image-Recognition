@@ -19,7 +19,7 @@ class ProductResource extends JsonResource
             'name' => $this->name, 
             'description' => $this->description, 
             'price' => $this->price, 
-            'image_url' => $this->image, 
+            'image_url' => !is_null($this->image) ? asset($this->image) : asset('images/no-image.png') ,
             'category' => $this->whenLoaded('category', fn () => new CategoryResource($this->category)), 
             'tags' => $this->whenLoaded('tags', fn () => TagResource::collection($this->tags))
         ];

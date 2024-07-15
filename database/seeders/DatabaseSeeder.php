@@ -21,15 +21,41 @@ class DatabaseSeeder extends Seeder
 
         User::factory()->create([
             'name' => 'Salman',
-            'email' => 'salmanpatni92@gmail.com',
+            'email' => 'salmanpatni92@gmail.com', 
+            'is_admin' => true
         ]);
 
-        $categories = Category::factory(5)->create();
+        $categories = Category::factory(3)->create();
 
-        $tags = Tag::factory(10)->create();
+        $tags = Tag::factory(6)->create();
 
-        $products = Product::factory(10)->recycle($categories)->create();
+        $productsData = [
+            [
+                'name' => 'Yellow T-Shirt', 
+                'description' => 'Exclusive solid tees from NextGen Bazaar', 
+                'price' => '9.99', 
+                'image' => 'images/g9EE9wLe5VxQJ5CxK4Zk5FfvKqBzIRb3zbGSPLi5.jpg'
+            ], 
+            [
+                'name' => 'Red T-Shirt', 
+                'description' => 'Exclusive solid tees from NextGen Bazaar', 
+                'price' => '9.99', 
+                'image' => 'images/mZraRfXg19T9WX4pTxiyk3tZVCmdMyn5vsELq5I0.jpg',
+            ], 
+            [
+                'name' => 'Black T-Shirt', 
+                'description' => 'Exclusive solid tees from NextGen Bazaar', 
+                'price' => '9.99', 
+                'image' => 'images/RqpbZGjqps0xbKIAyWvw2vAsw8ciVAU3GTS7Uy6u.webp'
+            ]
+        ];
 
-        ProductTag::factory(30)->recycle($tags)->recycle($products)->create();
+        foreach($productsData as $product){
+            Product::factory()->recycle($categories)->create($product);
+        }
+
+        // $products = Product::factory(3)->recycle($categories)->create();
+
+        // ProductTag::factory(10)->recycle($tags)->recycle($products)->create();
     }
 }

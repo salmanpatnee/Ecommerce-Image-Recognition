@@ -14,7 +14,8 @@ class ProductController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
+    {;
+
         return inertia('Products/Index', [
             'products' => ProductResource::collection(Product::with('category')->paginate()),
         ]);
@@ -43,6 +44,12 @@ class ProductController extends Controller
             'image' => 'nullable|image',
         ]);
 
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('images', 'public');
+            $attributes['image'] = $path;
+        }
+
+
         Product::create($attributes);
 
         return to_route('products.index');
@@ -61,7 +68,9 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        $categories = CategoryResource::collection(Category::all());
+
+        return inertia('Products/Create', ['categories' => $categories, 'product' => $product]);
     }
 
     /**
@@ -69,7 +78,22 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $attributes = $request->validate([
+            'category_id' => 'required',
+            'name' => 'required',
+            'description' => 'nullable',
+            'price' => 'required|numeric',
+            // 'image' => 'sometimes|nullable|image',
+        ]);
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('images', 'public');
+            $attributes['image'] = $path;
+        }
+
+        $product->update($attributes);
+        
+        return to_route('products.index');
     }
 
     /**
