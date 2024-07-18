@@ -14,10 +14,10 @@ class ProductController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {;
+    {
 
         return inertia('Products/Index', [
-            'products' => ProductResource::collection(Product::with('category')->paginate()),
+            'products' => ProductResource::collection(Product::with('category')->paginate())
         ]);
     }
 

@@ -19,6 +19,7 @@
         "vue": "^3.3.13"
     },
     "dependencies": {
-        "@heroicons/vue": "^2.1.5"
+        "@heroicons/vue": "^2.1.5",
+        "dayjs": "^1.11.11"
     }
 }
